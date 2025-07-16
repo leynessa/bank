@@ -13,6 +13,6 @@ else:
 nltk.download('punkt')
 nltk.download('stopwords')
 nltk.download('wordnet')
-nltk.download('omw-1.4')  # Additional wordnet data
+nltk.download('omw-1.4')  
 
-print("NLTK data downloaded successfully!")
+print("NLTK downloaded")
