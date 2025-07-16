@@ -52,9 +52,9 @@ travel            48
 
 
 
-============================================================
+
 MODEL COMPARISON RESULTS
-============================================================
+
               Model  Test Accuracy  CV Mean  CV Std
   Gradient Boosting         0.9825   0.9583  0.0255
       Random Forest         0.9737   0.9473  0.0306
@@ -67,7 +67,7 @@ Best Model: Gradient Boosting
 Best Test Accuracy: 0.9825
 
 Detailed Classification Report for Gradient Boosting:
---------------------------------------------------
+
                 precision    recall  f1-score   support
 
         dining       1.00      1.00      1.00        12
