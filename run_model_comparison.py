@@ -1,35 +1,39 @@
-
-"""
-Model Comparison Runner Script
-This script runs a comprehensive comparison of multiple ML models for transaction classification.
-"""
-
 import os
 import sys
 import argparse
 import pandas as pd
 import joblib
 from datetime import datetime
-
+import sklearn
 def check_dependencies():
     """Check if all required dependencies are installed"""
-    required_packages = [
-        'pandas', 'numpy', 'scikit-learn', 'nltk', 'matplotlib', 'seaborn'
-    ]
+    required_packages = {
+        'pandas': 'pandas',
+        'numpy': 'numpy', 
+        'sklearn': 'sklearn',  # Fixed: sklearn is the import name for scikit-learn
+        'nltk': 'nltk',
+        'matplotlib': 'matplotlib',
+        'seaborn': 'seaborn'
+    }
     
     missing_packages = []
-    for package in required_packages:
+    for import_name, package_name in package_map.items():
         try:
-            __import__(package)
+            __import__(import_name)
+            print(f" {package_name}")
         except ImportError:
-            missing_packages.append(package)
+            missing_packages.append(package_name)
+            print(f" {package_name}")
     
     if missing_packages:
-        print(f" Missing required packages: {missing_packages}")
+        print(f"\n Missing required packages: {missing_packages}")
         print("Please install them using:")
+        if 'sklearn' in missing_packages:
+            missing_packages = [p if p != 'sklearn' else 'scikit-learn' for p in missing_packages]
         print(f"pip install {' '.join(missing_packages)}")
         return False
     
+    print(" All dependencies are installed!")
     return True
 
 def check_data_file():
@@ -47,7 +51,7 @@ def run_data_analysis():
     """Run data analysis if requested"""
     print("Running data analysis...")
     try:
-        from data_analysis import main as analyze_data
+        from load_real_data import main as analyze_data
         analyze_data()
         print(" Data analysis completed")
     except Exception as e:
@@ -93,7 +97,7 @@ def display_training_results():
         # Load and display metadata if available
         if os.path.exists('model_metadata.pkl'):
             metadata = joblib.load('model_metadata.pkl')
-            print("\n Best Model Information:")
+            print("\n📊 Best Model Information:")
             print(f"Model Name: {metadata.get('model_name', 'Unknown')}")
             print(f"Model Type: {metadata.get('model_type', 'Unknown')}")
         
@@ -164,9 +168,9 @@ def create_summary_report():
     
     for file in expected_files:
         if os.path.exists(file):
-            report_lines.append(f"✅ {file}\n")
+            report_lines.append(f"{file}\n")
         else:
-            report_lines.append(f"❌ {file} (not found)\n")
+            report_lines.append(f" {file} (not found)\n")
     
     # Add model metadata if available
     if os.path.exists('model_metadata.pkl'):
@@ -199,7 +203,7 @@ def main():
     
     args = parser.parse_args()
     
-    print("Starting Transaction Classification Model Comparison")
+    print(" Starting Transaction Classification Model Comparison")
     print("=" * 60)
     
     # Check dependencies
@@ -229,4 +233,5 @@ def main():
     print("\n Model comparison pipeline completed!")
     print("Check the generated files for detailed results.")
 
-if __name__ == "__main__"
+if __name__ == "__main__":
+    main()
