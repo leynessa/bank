@@ -19,9 +19,9 @@ import logging
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.ensemble import RandomForestClassifier
 
-# ========================
+
 # Setup
-# ========================
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -56,9 +56,9 @@ except Exception as e:
     stop_words = set()
     lemmatizer = None
 
-# ========================
+
 # FastAPI Setup
-# ========================
+
 app = FastAPI(
     title="Transaction Classification API",
     description="Classifies transaction purpose text into categories",
@@ -69,9 +69,9 @@ app = FastAPI(
 model = None
 vectorizer = None
 
-# ========================
+
 # Pydantic Models
-# ========================
+
 class TransactionRequest(BaseModel):
     purpose_text: str
 
@@ -90,9 +90,9 @@ class HealthResponse(BaseModel):
     message: str
     model_loaded: bool
 
-# ========================
+
 # Text Cleaning Function with Fallback
-# ========================
+
 def clean_text(text: str) -> str:
     if not text or pd.isna(text):
         return ""
@@ -113,9 +113,9 @@ def clean_text(text: str) -> str:
     words = [w for w in words if len(w) > 2]
     return " ".join(words)
 
-# ========================
+
 # Model Load / Train
-# ========================
+
 def load_model():
     global model, vectorizer
     try:
@@ -168,9 +168,8 @@ def train_default_model():
     joblib.dump(vectorizer, 'transaction_vectorizer.pkl')
     logger.info("Default model trained and saved.")
 
-# ========================
 # FastAPI Startup Event
-# ========================
+
 @app.on_event("startup")
 async def startup_event():
     logger.info("Starting up...")
@@ -178,9 +177,9 @@ async def startup_event():
         logger.info("Training default model...")
         train_default_model()
 
-# ========================
+
 # API Endpoints
-# ========================
+
 @app.get("/", response_model=HealthResponse)
 async def root():
     return HealthResponse(
@@ -231,8 +230,9 @@ async def classify_batch(request: BatchTransactionRequest):
 
     return BatchTransactionResponse(predictions=results)
 
-# ========================
-# Run the App (optional if using Uvicorn CLI)
-# ========================
+
+# Run the App 
+
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+
