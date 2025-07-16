@@ -11,10 +11,9 @@ def load_and_analyze_dataset():
     try:
         # Try to load the actual dataset
         df = pd.read_csv('data/dataset.csv')
-        print(f"✅ Dataset loaded successfully with {len(df)} rows")
+        print(f"Dataset: {len(df)} rows")
     except FileNotFoundError:
-        print("❌ Dataset not found at 'data/dataset.csv'")
-        print("Please ensure your dataset is in the correct location")
+        print(" Dataset not found")
         return None
     
     # Display basic info
@@ -29,7 +28,7 @@ def load_and_analyze_dataset():
     required_columns = ['purpose_text', 'transaction_type']
     missing_columns = [col for col in required_columns if col not in df.columns]
     if missing_columns:
-        print(f"❌ Missing required columns: {missing_columns}")
+        print(f"Missing required columns: {missing_columns}")
         print(f"Available columns: {df.columns.tolist()}")
         return None
     
@@ -119,7 +118,7 @@ def analyze_transaction_types(df):
     
     print(f"\nClass imbalance ratio: {imbalance_ratio:.2f}")
     if imbalance_ratio > 5:
-        print("⚠️  High class imbalance detected!")
+        print("High class imbalance detected!")
     
     return class_df
 
@@ -190,10 +189,10 @@ def create_visualizations(df):
         plt.tight_layout()
         plt.savefig('data_analysis_plots.png', dpi=300, bbox_inches='tight')
         plt.show()
-        print("✅ Visualizations saved as 'data_analysis_plots.png'")
+        print("Visualizations saved as 'data_analysis_plots.png'")
         
     except Exception as e:
-        print(f"❌ Could not create visualizations: {e}")
+        print(f"Could not create visualizations: {e}")
 
 def generate_data_report(df):
     """Generate a comprehensive data report"""
@@ -243,7 +242,7 @@ def generate_data_report(df):
     with open('data_analysis_report.md', 'w') as f:
         f.writelines(report)
     
-    print("✅ Data analysis report saved as 'data_analysis_report.md'")
+    print("Data analysis report saved as 'data_analysis_report.md'")
     
     return ''.join(report)
 
@@ -270,7 +269,7 @@ def main():
     report = generate_data_report(df)
     
     print("\n" + "="*50)
-    print("DATA ANALYSIS COMPLETED")
+    print("DATA ANALYSIS")
     print("="*50)
     print("Files generated:")
     print("- data_analysis_plots.png")
@@ -284,7 +283,7 @@ def main():
     
     # Save cleaned dataset
     df_clean[['purpose_text', 'transaction_type']].to_csv('data/cleaned_dataset.csv', index=False)
-    print("✅ Cleaned dataset saved as 'data/cleaned_dataset.csv'")
+    print("Cleaned dataset saved as 'data/cleaned_dataset.csv'")
 
 if __name__ == "__main__":
     main()
