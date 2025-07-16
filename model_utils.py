@@ -24,3 +24,4 @@ def load_model():
     model = joblib.load('transaction_model.pkl')
     vectorizer = joblib.load('transaction_vectorizer.pkl')
     return model, vectorizer
+
