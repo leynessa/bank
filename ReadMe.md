@@ -4,6 +4,5 @@ Overview
 This project implements a text classification system that can predict transaction types (rent, groceries, utilities, etc.) based on transaction purpose descriptions. The system includes:
 
 Data preprocessing and analysis
-Multiple classical ML models (Naive Bayes, Logistic Regression, SVM, Decision Tree, Random Forest)
+Multiple classical ML models
 Model comparison and evaluation
-LLM approach demonstration (conceptual and partial implementation)
